@@ -11,11 +11,14 @@ class MoviesController < ApplicationController
   end
 
   def new_form
+    @movie = Movie.new
+    @character = Character.new
+    render("movies/new.html.erb")
   end
 
-  def create_row
-    
+  def create
     @movie = Movie.new
+
     @movie.title = params[:title]
     @movie.year = params[:year]
     @movie.duration = params[:duration]
@@ -23,9 +26,13 @@ class MoviesController < ApplicationController
     @movie.image_url = params[:image_url]
     @movie.director_id = params[:director_id]
 
-    @movie.save
+    save_status = @movie.save
 
-    render("show")
+    if save_status == true
+      redirect_to("/movies/#{@movie.id}", :notice => "Movie created successfully.")
+    else
+      render("movies/new.html.erb")
+    end
   end
 
   def edit_form

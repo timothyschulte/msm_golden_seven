@@ -10,19 +10,28 @@ class DirectorsController < ApplicationController
   end
 
   def new_form
+    @director = Director.new
+
+    render("directors/new.html.erb")
   end
 
-  def create_row
+  def create
     @director = Director.new
-    @director.dob = params[:dob]
+
     @director.name = params[:name]
+    @director.dob = params[:dob]
     @director.bio = params[:bio]
     @director.image_url = params[:image_url]
 
-    @director.save
+    save_status = @director.save
 
-    render("show")
+    if save_status == true
+      redirect_to("/directors/#{@director.id}", :notice => "Director created successfully.")
+    else
+      render("directors/new.html.erb")
+    end
   end
+
 
   def edit_form
     @director = Director.find(params[:id])
