@@ -1,0 +1,46 @@
+<div>
+  <h1>Directors</h1>
+</div>
+
+<p><a href="/directors/new_form">Add a New Director</a></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>DOB</th>
+      <th>Name</th>
+      <th>Bio</th>
+      <th>Image</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @directors.each do |director| %>
+      <tr>
+        <td><img src="<%= director.image_url %>"></td>
+        <td><%= director.name %></td>
+        <td><%= truncate(director.bio) %></td>
+        <td><%= director.dob %></td>
+
+
+        <td>
+          <a href="/directors/<%= director.id %>" >
+            <i class="fa fa-search-plus"></i>
+          </a>
+        </td>
+        <td>
+          <a href="/directors/<%= director.id %>/edit_form">
+            <i class="fa fa-edit"></i>
+          </a>
+        </td>
+        <td>
+          <a href="/delete_director/<%= director.id %>">
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

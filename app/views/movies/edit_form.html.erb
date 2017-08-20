@@ -1,0 +1,64 @@
+<div>
+  <h1>Edit Movie #<%= @movie.id %></h1>
+</div>
+
+<form action="/update_movie/<%= @movie.id %>">
+
+  <div>
+    <label for="title">
+      Title
+    </label>
+    <div>
+      <input type="text" id="title" name="title" placeholder="Title" value="<%= @movie.title %>">
+    </div>
+  </div>
+
+  <div>
+    <label for="year">
+      Year
+    </label>
+    <div>
+      <input type="text" id="year" name="year" placeholder="Year" value="<%= @movie.year %>">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="duration">
+      Duration
+    </label>
+    <div class="col-sm-10">
+      <input type="text" id="duration" name="duration" placeholder="Duration" value="<%= @movie.duration %>">
+    </div>
+  </div>
+
+  <div>
+    <label for="description">
+      Description
+    </label>
+    <div>
+      <textarea id="description" name="description" placeholder="Description" rows="3"><%= @movie.description %></textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="image_url">
+      Image url
+    </label>
+    <div>
+      <input type="text" id="image_url" name="image_url" placeholder="Image url" value="<%= @movie.image_url %>">
+    </div>
+  </div>
+
+  <div>
+    <label for="director_id">
+      Director
+    </label>
+    <div>
+      <%= select_tag(:director_id, options_from_collection_for_select(Director.all, :id, :name, @movie.director_id)) %>
+    </div>
+  </div>
+
+  <div>
+      <input type="submit" value="Update Movie">
+  </div>
+</form>
