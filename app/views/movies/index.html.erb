@@ -1,0 +1,47 @@
+<div>
+  <h1>Movies</h1>
+</div>
+
+<p><a href="/movies/new_form">Add a New Movie</a></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Duration</th>
+      <th>Description</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movie.each do |movie| %>
+      <tr>
+        <td><img src="<%= movie.image_url %>"></td>
+        <td><%= movie.title %></td>
+        <td><%= movie.year %></td>
+        <td><%= movie.duration %></td>
+        <td><%= movie.description %></td>
+
+        <td>
+          <a href="/movies/<%= movie.id %>" >
+            <i class="fa fa-search-plus"></i>
+          </a>
+        </td>
+        <td>
+          <a href="/movies/<%= movie.id %>/edit_form">
+            <i class="fa fa-edit"></i>
+          </a>
+        </td>
+        <td>
+          <a href="/delete_movie/<%= movie.id %>">
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
