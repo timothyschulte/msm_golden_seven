@@ -1,15 +1,18 @@
 class DirectorsController < ApplicationController
   def index
-    @director = Director.all
+    @directors = Director.all
+
     render("directors/index.html.erb")
   end
 
   def show
     @director = Director.find(params[:id])
-    render("directors/index.html.erb")
+    @movie = Movie.new
+    @character = Character.new
+    render("directors/show.html.erb")
   end
 
-  def new_form
+  def new
     @director = Director.new
 
     render("directors/new.html.erb")
@@ -32,28 +35,38 @@ class DirectorsController < ApplicationController
     end
   end
 
-
-  def edit_form
+  def edit
     @director = Director.find(params[:id])
+
+    render("directors/edit.html.erb")
   end
 
-  def update_row
+  def update
     @director = Director.find(params[:id])
 
-    @director.dob = params[:dob]
     @director.name = params[:name]
+    @director.dob = params[:dob]
     @director.bio = params[:bio]
     @director.image_url = params[:image_url]
 
-    @director.save
+    save_status = @director.save
 
-    render("show")
+    if save_status == true
+      redirect_to("/directors/#{@director.id}", :notice => "Director updated successfully.")
+    else
+      render("directors/edit.html.erb")
+    end
   end
 
   def destroy
     @director = Director.find(params[:id])
 
     @director.destroy
-    render("directors/index.html.erb")
+
+    if URI(request.referer).path == "/directors/#{@director.id}"
+      redirect_to("/", :notice => "Director deleted.")
+    else
+      redirect_to(:back, :notice => "Director deleted.")
+    end
   end
 end

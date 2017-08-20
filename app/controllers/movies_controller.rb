@@ -1,16 +1,17 @@
 class MoviesController < ApplicationController
   def index
-    @movie = Movie.all
-    
+    @movies = Movie.all
+
     render("movies/index.html.erb")
   end
 
   def show
     @movie = Movie.find(params[:id])
-    render("movies/index.html.erb")
+    @character = Character.new
+    render("movies/show.html.erb")
   end
 
-  def new_form
+  def new
     @movie = Movie.new
     @character = Character.new
     render("movies/new.html.erb")
@@ -35,29 +36,40 @@ class MoviesController < ApplicationController
     end
   end
 
-  def edit_form
+  def edit
     @movie = Movie.find(params[:id])
+
+    render("movies/edit.html.erb")
   end
 
-  def update_row
-    
+  def update
     @movie = Movie.find(params[:id])
+
     @movie.title = params[:title]
     @movie.year = params[:year]
     @movie.duration = params[:duration]
     @movie.description = params[:description]
     @movie.image_url = params[:image_url]
     @movie.director_id = params[:director_id]
-    
-    @movie.save
 
-    render("show")
+    save_status = @movie.save
+
+    if save_status == true
+      redirect_to("/movies/#{@movie.id}", :notice => "Movie updated successfully.")
+    else
+      render("movies/edit.html.erb")
+    end
   end
 
   def destroy
     @movie = Movie.find(params[:id])
 
     @movie.destroy
-    render("movies/index.html.erb")
+
+    if URI(request.referer).path == "/movies/#{@movie.id}"
+      redirect_to("/", :notice => "Movie deleted.")
+    else
+      redirect_to(:back, :notice => "Movie deleted.")
+    end
   end
 end

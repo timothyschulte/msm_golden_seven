@@ -1,46 +1,73 @@
 Rails.application.routes.draw do
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
-  Rails.application.routes.draw do
-#HOME
-  get('/', { :controller => 'movies', :action => 'index' })
+  # Routes for the Character resource:
+  # CREATE
+  get "/characters/new", :controller => "characters", :action => "new"
+  post "/create_character", :controller => "characters", :action => "create"
 
-#DIRECTORS
-  get('/directors/:id/edit_form', { :controller => 'directors', :action => 'edit_form' })
-  get('/update_director/:id', { :controller => 'directors', :action => 'update_row' })
-  
-  get('/delete_director/:id', { :controller => 'directors', :action => 'destroy' })
+  # READ
+  get "/characters", :controller => "characters", :action => "index"
+  get "/characters/:id", :controller => "characters", :action => "show"
 
-  get('/directors', { :controller => 'directors', :action => 'index' })
-  get('/directors/:id', { :controller => 'directors', :action => 'show' })
+  # UPDATE
+  get "/characters/:id/edit", :controller => "characters", :action => "edit"
+  post "/update_character/:id", :controller => "characters", :action => "update"
 
-  get('/directors/new_form', { :controller => 'directors', :action => 'new_form' })
-  get('/create_director', { :controller => 'directors', :action => 'create_row' })
+  # DELETE
+  get "/delete_character/:id", :controller => "characters", :action => "destroy"
+  #------------------------------
 
-#MOVIES
-  get('/movies/new_form', { :controller => 'movies', :action => 'new_form' })
-  get('/create_movie', { :controller => 'movies', :action => 'create_row' })
+  # Routes for the Actor resource:
+  # CREATE
+  get "/actors/new", :controller => "actors", :action => "new"
+  post "/create_actor", :controller => "actors", :action => "create"
 
-  get('/movies', { :controller => 'movies', :action => 'index' })
-  get('/movies/:id', { :controller => 'movies', :action => 'show' })
+  # READ
+  get "/actors", :controller => "actors", :action => "index"
+  get "/actors/:id", :controller => "actors", :action => "show"
 
-  get('/movies/:id/edit_form', { :controller => 'movies', :action => 'edit_form' })
-  get('/update_movie/:id', { :controller => 'movies', :action => 'update_row' })
+  # UPDATE
+  get "/actors/:id/edit", :controller => "actors", :action => "edit"
+  post "/update_actor/:id", :controller => "actors", :action => "update"
 
-  get('/delete_movie/:id', { :controller => 'movies', :action => 'destroy' })
+  # DELETE
+  get "/delete_actor/:id", :controller => "actors", :action => "destroy"
+  #------------------------------
 
-#ACTORS
-  get('/actors/new_form', { :controller => 'actors', :action => 'new_form' })
-  get('/create_actor', { :controller => 'actors', :action => 'create_row' })
+  # Routes for the Movie resource:
+  # CREATE
+  get "/movies/new", :controller => "movies", :action => "new"
+  post "/create_movie", :controller => "movies", :action => "create"
 
-  get('/actors', { :controller => 'actors', :action => 'index' })
-  get('/actors/:id', { :controller => 'actors', :action => 'show' })
+  # READ
+  get "/movies", :controller => "movies", :action => "index"
+  get "/movies/:id", :controller => "movies", :action => "show"
 
-  get('/actors/:id/edit_form', { :controller => 'actors', :action => 'edit_form' })
-  get('/update_actor/:id', { :controller => 'actors', :action => 'update_row' })
+  # UPDATE
+  get "/movies/:id/edit", :controller => "movies", :action => "edit"
+  post "/update_movie/:id", :controller => "movies", :action => "update"
 
-  get('/delete_actor/:id', { :controller => 'actors', :action => 'destroy' })
+  # DELETE
+  get "/delete_movie/:id", :controller => "movies", :action => "destroy"
+  #------------------------------
 
-end
+  # Routes for the Director resource:
+  # CREATE
+  get "/directors/new", :controller => "directors", :action => "new"
+  post "/create_director", :controller => "directors", :action => "create"
+
+  # READ
+  get "/directors", :controller => "directors", :action => "index"
+  get "/directors/:id", :controller => "directors", :action => "show"
+
+  # UPDATE
+  get "/directors/:id/edit", :controller => "directors", :action => "edit"
+  post "/update_director/:id", :controller => "directors", :action => "update"
+
+  # DELETE
+  get "/delete_director/:id", :controller => "directors", :action => "destroy"
+  #------------------------------
+
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
   mount WebGit::Engine, at: "/rails/git"
 end

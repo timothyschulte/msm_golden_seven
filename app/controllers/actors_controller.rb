@@ -1,50 +1,71 @@
 class ActorsController < ApplicationController
   def index
     @actors = Actor.all
+
     render("actors/index.html.erb")
   end
 
   def show
     @actor = Actor.find(params[:id])
-    render("actors/index.html.erb")
+    @character = Character.new
+    render("actors/show.html.erb")
   end
 
-  def new_form
-  end
-
-  def create_row
+  def new
     @actor = Actor.new
-    @actor.dob = params[:dob]
+
+    render("actors/new.html.erb")
+  end
+
+  def create
+    @actor = Actor.new
+
     @actor.name = params[:name]
+    @actor.dob = params[:dob]
     @actor.bio = params[:bio]
     @actor.image_url = params[:image_url]
 
-    @actor.save
+    save_status = @actor.save
 
-    render("show")
+    if save_status == true
+      redirect_to("/actors/#{@actor.id}", :notice => "Actor created successfully.")
+    else
+      render("actors/new.html.erb")
+    end
   end
 
-  def edit_form
+  def edit
     @actor = Actor.find(params[:id])
+
+    render("actors/edit.html.erb")
   end
 
-  def update_row
+  def update
     @actor = Actor.find(params[:id])
 
-    @actor.dob = params[:dob]
     @actor.name = params[:name]
+    @actor.dob = params[:dob]
     @actor.bio = params[:bio]
     @actor.image_url = params[:image_url]
 
-    @actor.save
+    save_status = @actor.save
 
-    render("show")
+    if save_status == true
+      redirect_to("/actors/#{@actor.id}", :notice => "Actor updated successfully.")
+    else
+      render("actors/edit.html.erb")
+    end
   end
 
   def destroy
     @actor = Actor.find(params[:id])
 
     @actor.destroy
-     render("actors/index.html.erb")
+
+    if URI(request.referer).path == "/actors/#{@actor.id}"
+      redirect_to("/", :notice => "Actor deleted.")
+    else
+      redirect_to(:back, :notice => "Actor deleted.")
+    end
   end
 end
