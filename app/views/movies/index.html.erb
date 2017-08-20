@@ -21,7 +21,7 @@
   <tbody>
     <% @movie.each do |movie| %>
       <tr>
-        <td><img src="<%= movie.image_url %>"></td>
+        <td><%= movie.image_url %>></td>
         <td><%= movie.title %></td>
         <td><%= movie.year %></td>
         <td><%= movie.duration %></td>

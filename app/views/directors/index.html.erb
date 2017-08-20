@@ -18,12 +18,12 @@
   </thead>
 
   <tbody>
-    <% @director.each do |movie| %>
+    <% @directors.each do |director| %>
       <tr>
-        <td><img src="<%= director.dob %>"></td>
+        <td><img src="<%= director.image_url %>"></td>
         <td><%= director.name %></td>
-        <td><%= director.bio %></td>
-        <td><%= director.image_url %></td>
+        <td><%= truncate(director.bio) %></td>
+        <td><%= director.dob %></td>
 
 
         <td>
